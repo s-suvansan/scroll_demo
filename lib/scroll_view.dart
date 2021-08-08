@@ -47,8 +47,7 @@ class _ScrollViewContentState extends State<ScrollViewContent> {
                     itemBuilder: (context, index) {
                       // GlobalKey _categoryKey = getKey(index);
                       // WidgetsBinding.instance.addPostFrameCallback((_) {
-                      //   categoryNameHeight = getSizes(_categoryKey).height;
-                      //   print(categoryNameHeight);
+                      //   _value.prepareCategoryHeight(_categoryKey);
                       // });
                       return (index != categories.length)
                           ? Column(

@@ -18,6 +18,9 @@ class ScrollProvider with ChangeNotifier {
   List<double> _horizontalPosition = [];
   List<double> get horizontalPosition => _horizontalPosition;
 
+  // List<double> _categoryHeigts = [];
+  // List<double> get categoryHeigts => _categoryHeigts;
+
   void scrollListener() {
     _verticalScrollCtrl.addListener(() {
       if (!_restrictScroll) {
@@ -27,6 +30,7 @@ class ScrollProvider with ChangeNotifier {
             // print("scroll up");
             _index--;
             _selectedIndex = _index;
+            notifyListeners();
             _horizontalScrollCtrl.jumpTo(_horizontalPosition[_selectedIndex] - 8.0);
           }
         } else {
@@ -34,10 +38,10 @@ class ScrollProvider with ChangeNotifier {
             // print("scroll down");
             _index++;
             _selectedIndex = _index;
+            notifyListeners();
             _horizontalScrollCtrl.jumpTo(_horizontalPosition[_selectedIndex] - 8.0);
           }
         }
-        notifyListeners();
       } else if (_verticalScrollCtrl.position.userScrollDirection == ScrollDirection.idle) {
         _restrictScroll = false;
       }
@@ -57,4 +61,12 @@ class ScrollProvider with ChangeNotifier {
       _horizontalPosition.add(getPositions(categoryKey).dx);
     }
   }
+
+  // void prepareCategoryHeight(GlobalKey categoryKey) {
+  //   if (_categoryHeigts.length < categories.length) {
+  //     double _height = getSizes(categoryKey).height;
+  //     // print(_height);
+  //     _categoryHeigts.add(_height);
+  //   }
+  // }
 }

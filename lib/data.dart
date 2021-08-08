@@ -109,7 +109,7 @@ Size getSizes(GlobalKey _key) {
   if (_key?.currentContext != null) {
     final RenderBox renderBox = _key.currentContext.findRenderObject();
     final size = renderBox.size;
-    print("SIZE of Red: $size");
+    // print("SIZE: $size");
     return size;
   } else {
     return Size(0.0, 0.0);
@@ -120,7 +120,7 @@ Offset getPositions(GlobalKey _key) {
   if (_key?.currentContext != null) {
     final RenderBox renderBox = _key.currentContext.findRenderObject();
     final position = renderBox.localToGlobal(Offset.zero);
-    // print("POSITION of Red: $position");
+    // print("POSITION: $position");
     return position;
   } else {
     return Offset(0.0, 0.0);
