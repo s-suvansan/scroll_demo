@@ -88,6 +88,73 @@ List<CategoryModel> categories = [
       ProductModel("Masala Chicken"),
     ],
   ),
+  CategoryModel(
+    "Fruit",
+    products: [
+      ProductModel("Pizza"),
+      ProductModel("Burger"),
+      ProductModel("Shawarma"),
+    ],
+  ),
+  CategoryModel(
+    "Vegitables",
+    products: [
+      ProductModel("Pizza"),
+      ProductModel("Burger"),
+    ],
+  ),
+  CategoryModel(
+    "Meats & Eats",
+    products: [
+      ProductModel("Pizza"),
+    ],
+  ),
+  CategoryModel(
+    "Fruit",
+    products: [
+      ProductModel("Pizza"),
+      ProductModel("Burger"),
+      ProductModel("Shawarma"),
+    ],
+  ),
+  CategoryModel(
+    "Vegitables",
+    products: [
+      ProductModel("Pizza"),
+      ProductModel("Burger"),
+    ],
+  ),
+  CategoryModel(
+    "Meats & Eats",
+    products: [
+      ProductModel("Pizza"),
+    ],
+  ),
+  CategoryModel(
+    "Rices",
+    products: [
+      ProductModel("Samba"),
+      ProductModel("Basmati"),
+    ],
+  ),
+  CategoryModel(
+    "Nuts",
+    products: [
+      ProductModel("Peanuts"),
+      ProductModel("Kasunuts"),
+      ProductModel("Pathaam"),
+      ProductModel("Pistha"),
+      ProductModel("Sunflower Seed"),
+    ],
+  ),
+  CategoryModel(
+    "Noodles",
+    products: [
+      ProductModel("Hot and spicy"),
+      ProductModel("Chicken Noodles"),
+      ProductModel("Pasta"),
+    ],
+  ),
 ];
 
 class CategoryModel {
@@ -150,7 +217,7 @@ double _lastListSize = categoryNameHeight +
     (categories[categories.length - 1].products.length * PRODUCT_CARD_HEIGHT) + // product length * product card size
     ((categories[categories.length - 1].products.length) * 8.0) + // space size between product cards
     8.0 + //FIXME categoryHeightKey
-    86.0;
+    82.0;
 
 double getBottomHeight(BuildContext context) {
   double _screenSize = MediaQuery.of(context).size.height;

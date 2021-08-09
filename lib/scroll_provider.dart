@@ -18,8 +18,33 @@ class ScrollProvider with ChangeNotifier {
   List<double> _horizontalPosition = [];
   List<double> get horizontalPosition => _horizontalPosition;
 
+  List<double> _verticalPosition = [];
+  List<double> get verticalPosition => _verticalPosition;
+
   // List<double> _categoryHeigts = [];
   // List<double> get categoryHeigts => _categoryHeigts;
+
+  List<GlobalKey> _horizontalCategoryKey = List<GlobalKey>();
+  List<GlobalKey> get horizontalCategoryKey => _horizontalCategoryKey;
+
+  void prepareHorizontalCategoryKey() {
+    if (_horizontalCategoryKey.length < categories.length) {
+      for (var i = 0; i < categories.length; i++) {
+        _horizontalCategoryKey.add(getKey(i));
+      }
+    }
+  }
+
+  List<GlobalKey> _verticalCategoryKey = List<GlobalKey>();
+  List<GlobalKey> get verticalCategoryKey => _verticalCategoryKey;
+
+  void prepareVerticalCategoryKey() {
+    if (_verticalCategoryKey.length < categories.length) {
+      for (var i = 0; i < categories.length; i++) {
+        _verticalCategoryKey.add(getKey(i));
+      }
+    }
+  }
 
   void scrollListener() {
     _verticalScrollCtrl.addListener(() {
@@ -56,17 +81,43 @@ class ScrollProvider with ChangeNotifier {
     _verticalScrollCtrl.jumpTo(positions[index] - 82.0);
   }
 
-  void prepareHorizontalBarPosition(GlobalKey categoryKey) {
-    if (_horizontalPosition.length < categories.length) {
-      _horizontalPosition.add(getPositions(categoryKey).dx);
+  double _horizontalCategoryLast = 0.0;
+  void prepareHorizontalBarPosition(int index) {
+    if (_horizontalPosition.length < categories.length && index > _horizontalPosition.length - 1) {
+      if (_horizontalPosition.isNotEmpty) {
+        _horizontalPosition.add(_horizontalPosition.last + _horizontalCategoryLast + 8.0);
+      } else {
+        _horizontalPosition.add(8.0);
+      }
+      _horizontalCategoryLast = getSizes(_horizontalCategoryKey[index]).width;
+      // print(_horizontalCategoryLast);
+      // _horizontalPosition.add(getPositions(categoryKey).dx);
     }
   }
 
-  // void prepareCategoryHeight(GlobalKey categoryKey) {
-  //   if (_categoryHeigts.length < categories.length) {
-  //     double _height = getSizes(categoryKey).height;
-  //     // print(_height);
-  //     _categoryHeigts.add(_height);
-  //   }
-  // }
+  double _verticalCategoryLast = 0.0;
+  void prepareVerticalListPosition(int index) {
+    if (_verticalPosition.length < categories.length && index > _verticalPosition.length - 1) {
+      if (_verticalPosition.isNotEmpty) {
+        _verticalPosition.add(_verticalPosition.last + _verticalCategoryLast + 8.0);
+      } else {
+        _verticalPosition.add(82.0);
+      }
+      _verticalCategoryLast = getSizes(_verticalCategoryKey[index]).height;
+      print(_verticalCategoryLast);
+    }
+    // print(_verticalPosition);
+  }
+
+  double getLastHorizontalSpaceWidth(BuildContext context) {
+    double _screenWidth = MediaQuery.of(context).size.width;
+    double _value = _screenWidth;
+    try {
+      double _lastCategoryWidth = _horizontalPosition[categories.length - 1] - _horizontalPosition[categories.length - 2];
+      _value = _screenWidth - (_lastCategoryWidth + 38.0);
+    } catch (e) {
+      _value = _screenWidth;
+    }
+    return _value;
+  }
 }

@@ -22,7 +22,6 @@ class _ScrollViewContentState extends State<ScrollViewContent> {
   }
 
   _afterLayout(_) {
-    // getSizes(_keyCategoryContainer);
     Offset _offset = getPositions(_key);
     prepareCategoryPositions(_offset.dy);
   }
@@ -30,6 +29,7 @@ class _ScrollViewContentState extends State<ScrollViewContent> {
   @override
   Widget build(BuildContext context) {
     final _value = Provider.of<ScrollProvider>(context, listen: false);
+    _value.prepareVerticalCategoryKey();
     _value.setVerticalScrollCtrl = _verticalScrollCtrl;
     _value.scrollListener();
     return SafeArea(
@@ -45,13 +45,12 @@ class _ScrollViewContentState extends State<ScrollViewContent> {
                     controller: _value.verticalScrollCtrl,
                     padding: EdgeInsets.symmetric(horizontal: 16.0),
                     itemBuilder: (context, index) {
-                      // GlobalKey _categoryKey = getKey(index);
-                      // WidgetsBinding.instance.addPostFrameCallback((_) {
-                      //   _value.prepareCategoryHeight(_categoryKey);
-                      // });
+                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                        _value.prepareVerticalListPosition(index);
+                      });
                       return (index != categories.length)
                           ? Column(
-                              // key: _categoryKey,
+                              key: _value.verticalCategoryKey[index],
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Container(
@@ -108,6 +107,7 @@ class HorizontalScrollView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<ScrollProvider>(builder: (_ctx, value, _ch) {
+      value.prepareHorizontalCategoryKey();
       return Container(
         color: Colors.black38,
         height: 50.0,
@@ -116,13 +116,12 @@ class HorizontalScrollView extends StatelessWidget {
             controller: value.horizontalScrollCtrl,
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
-              GlobalKey _categoryKey = getKey(index);
               WidgetsBinding.instance.addPostFrameCallback((_) {
-                value.prepareHorizontalBarPosition(_categoryKey);
+                value.prepareHorizontalBarPosition(index);
               });
               return (index != categories.length)
                   ? Center(
-                      key: _categoryKey,
+                      key: value.horizontalCategoryKey[index],
                       child: GestureDetector(
                         onTap: () => value.navigateToPosition(index),
                         child: Container(
@@ -133,7 +132,7 @@ class HorizontalScrollView extends StatelessWidget {
                       ),
                     )
                   : SizedBox(
-                      width: MediaQuery.of(context).size.width,
+                      width: value.getLastHorizontalSpaceWidth(context),
                     );
             },
             separatorBuilder: (__, _) => SizedBox(

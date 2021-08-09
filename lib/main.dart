@@ -4,8 +4,6 @@ import 'package:scroll_demo/scroll_provider.dart';
 import 'package:scroll_demo/scroll_view.dart';
 
 void main() {
-  // Provider.debugCheckInvalidValueType = null;
-
   runApp(
     ChangeNotifierProvider<ScrollProvider>(
       create: (_) => ScrollProvider(),
