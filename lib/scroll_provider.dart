@@ -21,9 +21,6 @@ class ScrollProvider with ChangeNotifier {
   List<double> _verticalPosition = [];
   List<double> get verticalPosition => _verticalPosition;
 
-  // List<double> _categoryHeigts = [];
-  // List<double> get categoryHeigts => _categoryHeigts;
-
   List<GlobalKey> _horizontalCategoryKey = List<GlobalKey>();
   List<GlobalKey> get horizontalCategoryKey => _horizontalCategoryKey;
 
@@ -78,7 +75,7 @@ class ScrollProvider with ChangeNotifier {
     _selectedIndex = index;
     notifyListeners();
     _horizontalScrollCtrl.jumpTo(_horizontalPosition[_selectedIndex] - 8.0);
-    _verticalScrollCtrl.jumpTo(positions[index] - 82.0);
+    _verticalScrollCtrl.animateTo(positions[index] - 82.0, curve: Curves.linear, duration: Duration(milliseconds: 500));
   }
 
   double _horizontalCategoryLast = 0.0;
